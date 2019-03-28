@@ -1,7 +1,38 @@
+<script src="https://cdn.statuspage.io/se-v2.js"></script>
+<script>
+var sp = new StatusPage.page({
+  page: 'x5g1snc7z7vt'
+});
+sp.summary({
+  success: function(data) {
+    $('.color-description').text(data.status.description);
+    $('.color-dot').addClass(data.status.indicator);
+  }
+});
+</script>
+
+<!-- begin olark code -->
+<script type="text/javascript" async> ;(function(o,l,a,r,k,y){if(o.olark)return; r="script";y=l.createElement(r);r=l.getElementsByTagName(r)[0]; y.async=1;y.src="//"+a;r.parentNode.insertBefore(y,r); y=o.olark=function(){k.s.push(arguments);k.t.push(+new Date)}; y.extend=function(i,j){y("extend",i,j)}; y.identify=function(i){y("identify",k.i=i)}; y.configure=function(i,j){y("configure",i,j);k.c[i]=j}; k=y._={s:[],t:[+new Date],c:{},l:a}; })(window,document,"static.olark.com/jsclient/loader.js");
+olark('api.box.hide');
+setTimeout(function() {
+  if (HelpCenter && HelpCenter.user.email) {
+    olark('api.chat.updateVisitorNickname', { snippet: HelpCenter.user.email });
+    olark('api.box.show');
+  }
+}, 1000);
+olark.identify('3441-204-10-4970');</script>
+<!-- end olark code -->
+
 <footer class="footer">
   <div class="footer-inner">
     {{#link 'help_center'}}{{help_center.name}}{{/link}}
 
+    <div id="statuspage">
+      <a href="https://status.rgsystem.com/" target="_blank">
+                <span class="color-dot"></span>
+                <span class="color-description"></span></a>
+    </div>
+    
     <div class="footer-language-selector">
       {{#if alternative_locales}}
         <div class="dropdown language-selector">
