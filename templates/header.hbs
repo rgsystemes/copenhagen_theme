@@ -12,6 +12,8 @@
             {{link 'new_request' class='submit-a-request'}}
         {{/if}}
     </nav>
-    {{user_info}}
+      {{#if signed_in}}
+          {{user_info}}
+      {{/if}}
   </div>
 </header>
