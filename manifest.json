@@ -1,7 +1,7 @@
 {
   "name": "RG System Zendesk theme (derived from Copenhagen)",
   "author": "Zendesk",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "api_version": 1,
   "default_locale": "en-us",
   "settings": [{
