@@ -12,7 +12,7 @@ sp.summary({
 </script>
 
 <!-- begin olark code -->
-<script type="text/javascript" async>
+<script type="text/javascript" defer>
     {{#if signed_in}}
         (function(o,l,a,r,k,y){if(o.olark)return; r="script";y=l.createElement(r);r=l.getElementsByTagName(r)[0]; y.async=1;y.src="//"+a;r.parentNode.insertBefore(y,r); y=o.olark=function(){k.s.push(arguments);k.t.push(+new Date)}; y.extend=function(i,j){y("extend",i,j)}; y.identify=function(i){y("identify",k.i=i)}; y.configure=function(i,j){y("configure",i,j);k.c[i]=j}; k=y._={s:[],t:[+new Date],c:{},l:a}; })(window,document,"static.olark.com/jsclient/loader.js");
         olark('api.box.hide');
@@ -42,12 +42,10 @@ sp.summary({
             return olarkId;
         }();
 
-        setTimeout(function() {
-            if (HelpCenter && HelpCenter.user.email) {
-                olark('api.chat.updateVisitorNickname', { snippet: HelpCenter.user.email });
-                olark('api.box.show');
-            }
-        }, 1000);
+        if (HelpCenter && HelpCenter.user.email) {
+            olark('api.chat.updateVisitorNickname', { snippet: HelpCenter.user.email });
+            olark('api.box.show');
+        }
 
         olark.identify(userOlarkId ? userOlarkId : '3441-204-10-4970');
     {{/if}}
