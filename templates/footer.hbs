@@ -17,37 +17,39 @@ sp.summary({
         (function(o,l,a,r,k,y){if(o.olark)return; r="script";y=l.createElement(r);r=l.getElementsByTagName(r)[0]; y.async=1;y.src="//"+a;r.parentNode.insertBefore(y,r); y=o.olark=function(){k.s.push(arguments);k.t.push(+new Date)}; y.extend=function(i,j){y("extend",i,j)}; y.identify=function(i){y("identify",k.i=i)}; y.configure=function(i,j){y("configure",i,j);k.c[i]=j}; k=y._={s:[],t:[+new Date],c:{},l:a}; })(window,document,"static.olark.com/jsclient/loader.js");
         olark('api.box.hide');
 
-        var userOlarkId = function() {
-            if (
-                    !HelpCenter
-                    || !HelpCenter.hasOwnProperty('user')
-                    || !HelpCenter.user.hasOwnProperty('tags')
-                    || ! HelpCenter.user.tags instanceof Array
-            )
-                return;
+        setTimeout(function() {
+            var userOlarkId = function() {
+                if (
+                        !HelpCenter
+                        || !HelpCenter.hasOwnProperty('user')
+                        || !HelpCenter.user.hasOwnProperty('tags')
+                        || ! HelpCenter.user.tags instanceof Array
+                )
+                    return;
 
-            var olarkId = '', olarkIdPrefix = 'olark_id_', hasOlarkEnabled = false, userTags = HelpCenter.user.tags;
+                var olarkId = '', olarkIdPrefix = 'olark_id_', hasOlarkEnabled = false, userTags = HelpCenter.user.tags;
 
-            for (var i = 0; i < userTags.length; i++) {
-                if (userTags[i] === 'has_olark_enabled') {
-                    hasOlarkEnabled = true;
-                } else if (userTags[i].slice(0, olarkIdPrefix.length) === olarkIdPrefix) {
-                    olarkId = userTags[i].slice(olarkIdPrefix.length);
+                for (var i = 0; i < userTags.length; i++) {
+                    if (userTags[i] === 'has_olark_enabled') {
+                        hasOlarkEnabled = true;
+                    } else if (userTags[i].slice(0, olarkIdPrefix.length) === olarkIdPrefix) {
+                        olarkId = userTags[i].slice(olarkIdPrefix.length);
+                    }
                 }
+
+                if (!hasOlarkEnabled || !olarkId)
+                    return;
+
+                return olarkId;
+            }();
+
+            if (HelpCenter && HelpCenter.user.email) {
+                olark('api.chat.updateVisitorNickname', { snippet: HelpCenter.user.email });
+                olark('api.box.show');
             }
 
-            if (!hasOlarkEnabled || !olarkId)
-                return;
-
-            return olarkId;
-        }();
-
-        if (HelpCenter && HelpCenter.user.email) {
-            olark('api.chat.updateVisitorNickname', { snippet: HelpCenter.user.email });
-            olark('api.box.show');
-        }
-
-        olark.identify(userOlarkId ? userOlarkId : '3441-204-10-4970');
+            olark.identify(userOlarkId ? userOlarkId : '3441-204-10-4970');
+        }, 1000);
     {{/if}}
 </script>
 <!-- end olark code -->
