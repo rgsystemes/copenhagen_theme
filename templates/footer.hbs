@@ -18,37 +18,30 @@ sp.summary({
         olark('api.box.hide');
 
         setTimeout(function() {
-            var userOlarkId = function() {
-                if (
-                        !HelpCenter
-                        || !HelpCenter.hasOwnProperty('user')
-                        || !HelpCenter.user.hasOwnProperty('tags')
-                        || ! HelpCenter.user.tags instanceof Array
-                )
-                    return;
+            if (
+                    !HelpCenter
+                    || !HelpCenter.user
+                    || !HelpCenter.user.email
+                    || !HelpCenter.user.tags
+                    || ! HelpCenter.user.tags instanceof Array
+            )
+                return;
 
-                var olarkId = '', olarkIdPrefix = 'olark_id_', hasOlarkEnabled = false, userTags = HelpCenter.user.tags;
+            var olarkId = '', olarkIdPrefix = 'olark_id_', hasOlarkEnabled = false, userTags = HelpCenter.user.tags;
 
-                for (var i = 0; i < userTags.length; i++) {
-                    if (userTags[i] === 'has_olark_enabled') {
-                        hasOlarkEnabled = true;
-                    } else if (userTags[i].slice(0, olarkIdPrefix.length) === olarkIdPrefix) {
-                        olarkId = userTags[i].slice(olarkIdPrefix.length);
-                    }
+            for (var i = 0; i < userTags.length; i++) {
+                if (userTags[i] === 'has_olark_enabled') {
+                    hasOlarkEnabled = true;
+                } else if (userTags[i].slice(0, olarkIdPrefix.length) === olarkIdPrefix) {
+                    olarkId = userTags[i].slice(olarkIdPrefix.length);
                 }
+            }
 
-                if (!hasOlarkEnabled || !olarkId)
-                    return;
-
-                return olarkId;
-            }();
-
-            if (HelpCenter && HelpCenter.user.email) {
+            if (hasOlarkEnabled && olarkId) {
+                olark.identify(olarkId);
                 olark('api.chat.updateVisitorNickname', { snippet: HelpCenter.user.email });
                 olark('api.box.show');
             }
-
-            olark.identify(userOlarkId ? userOlarkId : '3441-204-10-4970');
         }, 1000);
     {{/if}}
 </script>
